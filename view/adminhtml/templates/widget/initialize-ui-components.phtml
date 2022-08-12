@@ -1,0 +1,29 @@
+<?php
+/** @var $block \Magento\Framework\View\Element\Template */
+?>
+
+<script type="text/javascript">
+    require([
+        'underscore',
+        'jquery',
+        'Grasch_AdminUi/js/widget/initialization/main',
+        'uiRegistry'
+    ], function (_, $, main, registry) {
+        'use strict';
+
+        main.apply();
+
+        $('body').on('widget-disappeared', function () {
+            $('.widget-ui-components').each(function (index, item) {
+                var path = $(item).data('scope');
+                if (registry.get(path)) {
+                    _.each(registry.get(path).deps, function (dep) {
+                        registry.get(dep).destroy();
+                    })
+                    registry.get(path).destroy();
+                }
+            })
+        })
+    });
+
+</script>
