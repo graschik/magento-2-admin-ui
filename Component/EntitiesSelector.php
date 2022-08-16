@@ -171,7 +171,7 @@ class EntitiesSelector extends AbstractComponent
             'modal' => $this->getGenericModal(),
             'button_set' => $this->getButtonSet(),
             $this->getName() => $this->getGrid(),
-            'data-processor' => $this->getDataProcessor()
+            'listing-renderer' => $this->getListingRenderer()
         ];
     }
 
@@ -373,8 +373,6 @@ class EntitiesSelector extends AbstractComponent
         $additionalButtonAddActions =
             $this->getDataByPath('button_set/button_add/additionalActions') ?? [];
 
-        $namespace = $this->getRequiredConfigValueByKey('namespace');
-
         return [
             'data' => [
                 'config' => [
@@ -404,13 +402,8 @@ class EntitiesSelector extends AbstractComponent
                                     ],
                                     [
                                         'targetName' =>
-                                            '${ $.parentName.replace(".button_set", "") }.modal.' . $namespace,
+                                            '${ $.parentName.replace(".button_set", "") }.listing-renderer',
                                         'actionName' => 'render',
-                                    ],
-                                    [
-                                        'targetName' =>
-                                            '${ $.parentName.replace(".button_set", "") }.data-processor',
-                                        'actionName' => 'prepareSelections',
                                     ],
                                 ],
                                 $additionalButtonAddActions
@@ -455,15 +448,15 @@ class EntitiesSelector extends AbstractComponent
      * @return array
      * @throws LocalizedException
      */
-    public function getDataProcessor(): array
+    public function getListingRenderer(): array
     {
         return [
             'data' => [
                 'config' => [
-                    'component' => 'Grasch_AdminUi/js/form/components/insert-listing/data-processor',
+                    'component' => 'Grasch_AdminUi/js/form/components/insert-listing/renderer',
                     'selectionsProvider' => $this->getSelectionsProvider(),
-                    'insertListingProvider' => 'uniq_ns = ' . $this->generateUniqNamespace(),
-                    'gridProvider' => '${ $.parentName}.' . $this->getName()
+                    'insertListing' => 'uniq_ns = ' . $this->generateUniqNamespace(),
+                    'grid' => '${ $.parentName}.' . $this->getName()
                 ]
             ],
             'context' => $this->context
@@ -488,7 +481,7 @@ class EntitiesSelector extends AbstractComponent
                     'provider' => null,
                     'options' => [
                         'buttons' => $this->getGenericModalButtons(),
-                        'type' => 'slide'
+                        'type' => 'slide',
                     ],
                 ],
             ],
@@ -500,6 +493,7 @@ class EntitiesSelector extends AbstractComponent
                             'autoRender' => false,
                             'componentType' => 'insertListing',
                             'component' => 'Magento_Ui/js/form/components/insert-listing',
+                            'firstLoad' => true,
                             'dataScope' => $namespace,
                             'externalProvider' => $externalProvider,
                             'selectionsProvider' => $selectionsProvider,
