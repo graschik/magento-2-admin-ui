@@ -32,6 +32,16 @@ define([
                     if (insertListing.firstLoad) {
                         self.listens[selectionsProvider.name + ':rows'] = 'updateListingFiltersForFirstLoad';
                         self.initLinks();
+                    } else {
+                        var
+                            grid = registry.get(self.grid),
+                            selected = [];
+
+                        _.each(grid.recordData(), function (row) {
+                            selected.push(row[grid.identificationDRProperty]);
+                        });
+
+                        selectionsProvider.selected(selected);
                     }
                 });
             }
