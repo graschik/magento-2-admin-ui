@@ -24,9 +24,9 @@ define([
                 insertListing.isRendered = true;
                 insertListing.destroyInserted();
 
-                registry.get(self.selectionsProvider, function (selectionsProvider) {
+                registry.get(self.selectionsProvider, function (selections) {
                     if (insertListing.firstLoad) {
-                        self.listens[selectionsProvider.name + ':rows'] = 'updateListingFiltersForFirstLoad';
+                        self.listens[selections.name + ':rows'] = 'updateListingFiltersForFirstLoad';
                         self.initLinks();
                     } else {
                         var
@@ -37,7 +37,7 @@ define([
                             selected.push(row[grid.identificationDRProperty]);
                         });
 
-                        selectionsProvider.selected(selected);
+                        selections.selected(selected);
                     }
                 });
             }
