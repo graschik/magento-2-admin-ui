@@ -15,4 +15,16 @@
     <type name="Magento\Widget\Block\Adminhtml\Widget\Options">
         <plugin name="Grasch_AdminUi::decodeComponentValues" type="Grasch\AdminUi\Plugin\Magento\Widget\Block\Adminhtml\Widget\Options\DecodeComponentValues" />
     </type>
+
+    <preference for="Grasch\AdminUi\Model\JsConfiguration\ModifierInterface" type="Grasch\AdminUi\Model\JsConfiguration\ModifierComposite"/>
+    <type name="Magento\Framework\View\Layout\Generic">
+        <plugin name="Grasch_AdminUi::modifyJsConfiguration" type="Grasch\AdminUi\Plugin\Magento\Framework\View\Layout\Generic\ModifyJsConfiguration" />
+    </type>
+    <type name="Grasch\AdminUi\Model\JsConfiguration\ModifierComposite">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="listing_component_modifier" xsi:type="object">Grasch\AdminUi\Model\JsConfiguration\Modifiers\ListingComponentModifier</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

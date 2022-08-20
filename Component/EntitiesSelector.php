@@ -437,6 +437,22 @@ class EntitiesSelector extends AbstractComponent
      * @return string
      * @throws LocalizedException
      */
+    private function getColumnsProvider(): string
+    {
+        $namespace = $this->getRequiredConfigValueByKey('namespace');
+
+        return sprintf(
+            '%s.%s.%s',
+            $namespace,
+            $namespace,
+            $this->getRequiredConfigValueByKey('columnsName')
+        );
+    }
+
+    /**
+     * @return string
+     * @throws LocalizedException
+     */
     private function getExternalProvider(): string
     {
         $namespace = $this->getRequiredConfigValueByKey('namespace');
@@ -455,6 +471,7 @@ class EntitiesSelector extends AbstractComponent
                 'config' => [
                     'component' => 'Grasch_AdminUi/js/form/components/insert-listing/renderer',
                     'selectionsProvider' => $this->getSelectionsProvider(),
+                    'columnsProvider' => $this->getColumnsProvider(),
                     'insertListing' => 'uniq_ns = ' . $this->generateUniqNamespace(),
                     'grid' => '${ $.parentName}.' . $this->getName()
                 ]
@@ -504,6 +521,14 @@ class EntitiesSelector extends AbstractComponent
                             'dataLinks' => [
                                 'imports' => false,
                                 'exports' => true
+                            ],
+                            'params' => [
+                                'namespace' => '${ $.ns }',
+                                'js_modifier' => [
+                                    'params' => [
+                                        'columns_name' => $this->getRequiredConfigValueByKey('columnsName')
+                                    ]
+                                ]
                             ],
                             'links' => [
                                 'value' => '${ $.provider }:${ $.uniq_ns }'
