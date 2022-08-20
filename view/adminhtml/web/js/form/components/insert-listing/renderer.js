@@ -24,11 +24,7 @@ define([
                 insertListing.isRendered = true;
                 insertListing.destroyInserted();
 
-                registry.get(this.selectionsProvider, function (selectionsProvider) {
-                    if (!selectionsProvider) {
-                        return;
-                    }
-
+                registry.get(self.selectionsProvider, function (selectionsProvider) {
                     if (insertListing.firstLoad) {
                         self.listens[selectionsProvider.name + ':rows'] = 'updateListingFiltersForFirstLoad';
                         self.initLinks();
