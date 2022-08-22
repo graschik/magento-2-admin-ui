@@ -87,6 +87,7 @@ class EntitiesSelector extends AbstractComponent
      * @param UiComponentGenerator $uiComponentGenerator
      * @param array $components
      * @param array $data
+     * @param array $requiredColumnFields
      * @throws LocalizedException
      */
     public function __construct(
@@ -469,7 +470,7 @@ class EntitiesSelector extends AbstractComponent
         return [
             'data' => [
                 'config' => [
-                    'component' => 'Grasch_AdminUi/js/form/components/insert-listing/renderer',
+                    'component' => 'Grasch_AdminUi/js/view/components/entities-selector/insert-listing/renderer',
                     'selectionsProvider' => $this->getSelectionsProvider(),
                     'columnsProvider' => $this->getColumnsProvider(),
                     'insertListing' => 'uniq_ns = ' . $this->generateUniqNamespace(),
