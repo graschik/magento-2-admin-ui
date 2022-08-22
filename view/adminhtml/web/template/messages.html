@@ -1,0 +1,9 @@
+<div data-role="messages" class="messages" data-bind="visible: isVisible(), click: removeAll">
+    <!-- ko foreach: messageContainer.messagesConfig() -->
+        <!-- ko foreach: $data.messages() -->
+        <div aria-atomic="true" role="alert" data-bind="css: 'message-' + $parent.type + ' ' + $parent.type" class="message">
+            <div data-ui-id="messages-message-error" data-bind="text: $data"></div>
+        </div>
+        <!--/ko-->
+    <!--/ko-->
+</div>
