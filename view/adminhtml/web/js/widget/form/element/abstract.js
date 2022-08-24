@@ -59,7 +59,7 @@ define([
                 customValue = value;
             }
 
-            this.customValue('encodedComponentsData|' + btoa(customValue));
+            this.customValue('encodedComponentsData|' + Base64.encode(customValue));
         }
     });
 });

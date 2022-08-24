@@ -16,15 +16,15 @@ define([
             listens: {
                 value: 'updateValue'
             },
-            componentInitialized: false,
+            componentInitialized: false
         },
 
         initialize: function () {
             this._super();
 
-            this.content = atob(this.content);
+            this.content = Base64.decode(this.content);
             if (this.customValue()) {
-                this.value(atob(this.customValue()));
+                this.value(Base64.decode(this.customValue()));
             }
             this.componentInitialized = true;
 
@@ -43,7 +43,7 @@ define([
             if (!this.componentInitialized) {
                 return;
             }
-            this.customValue(btoa(this.value()));
-        },
+            this.customValue(Base64.encode(this.value()));
+        }
     });
 });
