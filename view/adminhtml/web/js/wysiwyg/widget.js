@@ -2,6 +2,7 @@ define([
     'jquery',
     'wysiwygAdapter',
     'Magento_Ui/js/modal/alert',
+    'uiRegistry',
     'jquery/ui',
     'mage/translate',
     'mage/mage',
@@ -9,7 +10,7 @@ define([
     'mage/adminhtml/events',
     'prototype',
     'Magento_Ui/js/modal/modal'
-], function (jQuery, wysiwyg, alert) {
+], function (jQuery, wysiwyg, alert, registry) {
     var widgetTools = {
 
         /**
@@ -439,6 +440,20 @@ define([
             });
 
             validationResult = $form.valid();
+
+            if (validationResult) {
+                jQuery('.widget-ui-components').each(function (index, item) {
+                    var path = jQuery(item).data('scope');
+                    if (registry.get(path)) {
+                        registry.get(path).source.set('params.invalid', false);
+                        registry.get(path).source.trigger('data.validate');
+                        if (registry.get(path).source.get('params.invalid')) {
+                            validationResult = false;
+                            return false;
+                        }
+                    }
+                });
+            }
 
             if (validationResult) {
                 formElements = [];
