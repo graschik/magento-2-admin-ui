@@ -1,0 +1,23 @@
+<div class="admin__field-complex" css="$data.additionalClasses" attr="'data-index': index">
+
+    <div class="admin__field-complex-title" if="label">
+        <span text="label"/>
+    </div>
+    <!-- ko foreach: getRegion('messages') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!--/ko-->
+
+    <div class="admin__field-complex-elements">
+        <!-- ko foreach: { data: elems(), as: 'elem'}  -->
+            <!-- ko if: (displayArea != 'messages') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!-- /ko -->
+        <!-- /ko -->
+    </div>
+
+    <div class="admin__field-complex-content"
+         html="$data.content" if="$data.content"></div>
+
+    <div class="admin__field-complex-text"
+         html="$data.text" if="$data.text"></div>
+</div>

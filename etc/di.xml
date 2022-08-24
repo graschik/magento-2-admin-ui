@@ -24,6 +24,7 @@
         <arguments>
             <argument name="modifiers" xsi:type="array">
                 <item name="listing_component_modifier" xsi:type="object">Grasch\AdminUi\Model\JsConfiguration\Modifiers\ListingComponentModifier</item>
+                <item name="multiselect_component_modifier" xsi:type="object">Grasch\AdminUi\Model\JsConfiguration\Modifiers\MultiselectComponentModifier</item>
             </argument>
         </arguments>
     </type>

@@ -120,7 +120,7 @@ class EntitiesSelector extends AbstractComponent
      */
     protected function _initColumnsConfig()
     {
-        $columns = $this->getRequiredConfigValueByKey('grid/columns');
+        $columns = $this->getRequiredConfigValueByPath('grid/columns');
         if (empty($columns)) {
             throw new LocalizedException(__(
                 '"config/grid/columns" can not be empty for the "%2" field.',
@@ -130,7 +130,7 @@ class EntitiesSelector extends AbstractComponent
 
         foreach ($columns as $columnName => $columnConfig) {
             foreach ($this->_requiredColumnFields as $requiredField) {
-                $this->getRequiredConfigValueByKey(
+                $this->getRequiredConfigValueByPath(
                     'grid/columns/' . $columnName . '/' . $requiredField
                 );
             }
@@ -183,7 +183,7 @@ class EntitiesSelector extends AbstractComponent
     public function getGrid(): array
     {
         $dndEnabled =
-            $this->getDataByPath('grid/dndEnabled') ?? true;
+            $this->getConfigByPath('grid/dndEnabled') ?? true;
 
         return [
             'data' => [
@@ -209,7 +209,7 @@ class EntitiesSelector extends AbstractComponent
                     'links' => [
                         'insertData' =>
                             '${ $.provider }:${ $.dataProvider }',
-                        '__disableTmpl' => ['insertData' => false],
+                        '__disableTmpl' => ['insertData' => false]
                     ],
                     'sortOrder' => 2,
                 ]
@@ -368,20 +368,20 @@ class EntitiesSelector extends AbstractComponent
     {
         //registry.get('customer_address_listing.customer_address_listing_data_source').set('params.parent_id' , 1)
         $content =
-            $this->getDataByPath('button_set/main_title') ?? __('Select Items');
+            $this->getConfigByPath('button_set/main_title') ?? __('Select Items');
         $buttonTitle =
-            $this->getDataByPath('button_set/button_add/title') ?? __('Add Items');
+            $this->getConfigByPath('button_set/button_add/title') ?? __('Add Items');
         $additionalButtonAddActions =
-            $this->getDataByPath('button_set/button_add/additionalActions') ?? [];
+            $this->getConfigByPath('button_set/button_add/additionalActions') ?? [];
 
         return [
             'data' => [
                 'config' => [
                     'formElement' => 'container',
                     'componentType' => 'container',
-                    'label' => $this->getRequiredConfigValueByKey('label'),
+                    'label' => $this->getRequiredConfigValueByPath('label'),
                     'content' => $content,
-                    'template' => 'ui/form/components/complex',
+                    'template' => 'Grasch_AdminUi/entities-selector/complex',
                     'component' => 'uiComponent'
                 ]
             ],
@@ -423,14 +423,14 @@ class EntitiesSelector extends AbstractComponent
      */
     private function getSelectionsProvider(): string
     {
-        $namespace = $this->getRequiredConfigValueByKey('namespace');
+        $namespace = $this->getRequiredConfigValueByPath('namespace');
 
         return sprintf(
             '%s.%s.%s.%s',
             $namespace,
             $namespace,
-            $this->getRequiredConfigValueByKey('columnsName'),
-            $this->getRequiredConfigValueByKey('selectionsColumnName')
+            $this->getRequiredConfigValueByPath('columnsName'),
+            $this->getRequiredConfigValueByPath('selectionsColumnName')
         );
     }
 
@@ -440,13 +440,13 @@ class EntitiesSelector extends AbstractComponent
      */
     private function getColumnsProvider(): string
     {
-        $namespace = $this->getRequiredConfigValueByKey('namespace');
+        $namespace = $this->getRequiredConfigValueByPath('namespace');
 
         return sprintf(
             '%s.%s.%s',
             $namespace,
             $namespace,
-            $this->getRequiredConfigValueByKey('columnsName')
+            $this->getRequiredConfigValueByPath('columnsName')
         );
     }
 
@@ -456,7 +456,7 @@ class EntitiesSelector extends AbstractComponent
      */
     private function getExternalProvider(): string
     {
-        $namespace = $this->getRequiredConfigValueByKey('namespace');
+        $namespace = $this->getRequiredConfigValueByPath('namespace');
 
         return sprintf('%s.%s_data_source', $namespace, $namespace);
     }
@@ -474,7 +474,7 @@ class EntitiesSelector extends AbstractComponent
                     'selectionsProvider' => $this->getSelectionsProvider(),
                     'columnsProvider' => $this->getColumnsProvider(),
                     'insertListing' => 'uniq_ns = ' . $this->generateUniqNamespace(),
-                    'grid' => '${ $.parentName}.' . $this->getName()
+                    'grid' => '${ $.parentName }.' . $this->getName()
                 ]
             ],
             'context' => $this->context
@@ -487,7 +487,7 @@ class EntitiesSelector extends AbstractComponent
      */
     public function getGenericModal(): array
     {
-        $namespace = $this->getRequiredConfigValueByKey('namespace');
+        $namespace = $this->getRequiredConfigValueByPath('namespace');
         $externalProvider = $this->getExternalProvider();
         $selectionsProvider = $this->getSelectionsProvider();
 
@@ -526,9 +526,7 @@ class EntitiesSelector extends AbstractComponent
                             'params' => [
                                 'namespace' => '${ $.ns }',
                                 'js_modifier' => [
-                                    'params' => [
-                                        'columns_name' => $this->getRequiredConfigValueByKey('columnsName')
-                                    ]
+                                    'params' => $this->getJsModifierParams()
                                 ]
                             ],
                             'links' => [
@@ -548,17 +546,36 @@ class EntitiesSelector extends AbstractComponent
      * @return array
      * @throws LocalizedException
      */
+    public function getJsModifierParams(): array
+    {
+        $params = ['columns_name' => $this->getRequiredConfigValueByPath('columnsName')];
+
+        $limit = $this->getConfigByPath('limit/max');
+        if ($limit) {
+            $params['limiter'] = [
+                'selectionsProvider' => $this->getSelectionsProvider(),
+                'limit' => $limit
+            ];
+        }
+
+        return $params;
+    }
+
+    /**
+     * @return array
+     * @throws LocalizedException
+     */
     public function getGenericModalButtons(): array
     {
         $cancelButtonText =
-            $this->getDataByPath('modal/options/buttons/cancel/title') ?? __('Cancel');
+            $this->getConfigByPath('modal/options/buttons/cancel/title') ?? __('Cancel');
         $additionalCancelActions =
-            $this->getDataByPath('modal/options/buttons/cancel/additionalActions') ?? [];
+            $this->getConfigByPath('modal/options/buttons/cancel/additionalActions') ?? [];
 
         $saveButtonText =
-            $this->getDataByPath('modal/options/buttons/save/title') ?? __('Add Selected Items');
+            $this->getConfigByPath('modal/options/buttons/save/title') ?? __('Add Selected Items');
         $additionalSaveActions =
-            $this->getDataByPath('modal/options/buttons/save/additionalActions') ?? [];
+            $this->getConfigByPath('modal/options/buttons/save/additionalActions') ?? [];
 
         return [
             [
@@ -588,22 +605,31 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
-     * @param string $key
+     * @param string $path
      * @return array|mixed
      * @throws LocalizedException
      */
-    public function getRequiredConfigValueByKey(string $key)
+    public function getRequiredConfigValueByPath(string $path)
     {
-        $value = $this->getDataByPath('config/' . $key);
+        $value = $this->getConfigByPath($path);
         if ($value === null) {
             throw new LocalizedException(__(
                 'The "%1" configuration parameter is required for the "%2" field.',
-                'config/' . $key,
+                'config/' . $path,
                 $this->getName()
             ));
         }
 
         return $value;
+    }
+
+    /**
+     * @param string $path
+     * @return array|mixed|null
+     */
+    public function getConfigByPath(string $path)
+    {
+        return $this->getDataByPath('config/' . $path);
     }
 
     /**
@@ -614,7 +640,7 @@ class EntitiesSelector extends AbstractComponent
     {
         return sprintf(
             '%s_%s',
-            $this->getRequiredConfigValueByKey('namespace'),
+            $this->getRequiredConfigValueByPath('namespace'),
             $this->getName()
         );
     }
