@@ -28,4 +28,6 @@
             </argument>
         </arguments>
     </type>
+
+    <preference for="Grasch\AdminUi\Model\Widget\MetadataInterface" type="Grasch\AdminUi\Model\Widget\Metadata"/>
 </config>

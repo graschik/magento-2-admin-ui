@@ -3,8 +3,9 @@ define([
     'mageUtils',
     'uiLayout',
     'Magento_Ui/js/form/element/abstract',
-    'ko'
-], function (_, utils, layout, Abstract, ko) {
+    'ko',
+    'jquery'
+], function (_, utils, layout, Abstract, ko, $) {
     'use strict';
 
     return Abstract.extend({
@@ -54,7 +55,7 @@ define([
                 customValue;
 
             if (typeof value == 'object') {
-                customValue = JSON.stringify(value);
+                customValue = JSON.stringify($.extend({}, value));
             } else {
                 customValue = value;
             }

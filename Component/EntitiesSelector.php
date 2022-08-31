@@ -366,7 +366,6 @@ class EntitiesSelector extends AbstractComponent
      */
     public function getButtonSet(): array
     {
-        //registry.get('customer_address_listing.customer_address_listing_data_source').set('params.parent_id' , 1)
         $content =
             $this->getConfigByPath('button_set/main_title') ?? __('Select Items');
         $buttonTitle =
