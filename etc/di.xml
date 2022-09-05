@@ -12,10 +12,6 @@
         </arguments>
     </type>
 
-    <type name="Magento\Widget\Block\Adminhtml\Widget\Options">
-        <plugin name="Grasch_AdminUi::decodeComponentValues" type="Grasch\AdminUi\Plugin\Magento\Widget\Block\Adminhtml\Widget\Options\DecodeComponentValues" />
-    </type>
-
     <preference for="Grasch\AdminUi\Model\JsConfiguration\ModifierInterface" type="Grasch\AdminUi\Model\JsConfiguration\ModifierComposite"/>
     <type name="Magento\Framework\View\Layout\Generic">
         <plugin name="Grasch_AdminUi::modifyJsConfiguration" type="Grasch\AdminUi\Plugin\Magento\Framework\View\Layout\Generic\ModifyJsConfiguration" />
@@ -30,4 +26,16 @@
     </type>
 
     <preference for="Grasch\AdminUi\Model\Widget\MetadataInterface" type="Grasch\AdminUi\Model\Widget\Metadata"/>
+    <type name="Magento\Widget\Block\Adminhtml\Widget\Options">
+        <plugin name="Grasch_AdminUi::decodeComponentValues" type="Grasch\AdminUi\Plugin\Magento\Widget\Block\Adminhtml\Widget\Options\DecodeComponentValues" />
+    </type>
+    <type name="Grasch\AdminUi\Model\Widget\PrepareUiComponent">
+        <arguments>
+            <argument name="additionalPreparers" xsi:type="array">
+                <item name="wysiwyg" xsi:type="array">
+                    <item name="0" xsi:type="object">Grasch\AdminUi\Model\Widget\AdditionalPreparer\WysiwygPreparer</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
 </config>
