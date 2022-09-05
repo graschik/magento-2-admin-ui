@@ -54,6 +54,10 @@ define([
                 value = this.value(),
                 customValue;
 
+            if (!value) {
+                return;
+            }
+
             if (typeof value == 'object') {
                 customValue = JSON.stringify($.extend({}, value));
             } else {

@@ -42,7 +42,7 @@ use Magento\Ui\Component\Modal;
 
 class EntitiesSelector extends AbstractComponent
 {
-    public const NAME = 'graschEntitiesSelector';
+    public const NAME = 'entitiesSelector';
 
     protected const COLUMN_FIELD_ORIGINAL_NAME = 'original_name';
     protected const COLUMN_FIELD_TYPE          = 'type';
@@ -53,12 +53,12 @@ class EntitiesSelector extends AbstractComponent
     /**
      * @var UrlInterface
      */
-    private UrlInterface $urlBuilder;
+    protected UrlInterface $urlBuilder;
 
     /**
      * @var UiComponentGenerator
      */
-    private UiComponentGenerator $uiComponentGenerator;
+    protected UiComponentGenerator $uiComponentGenerator;
 
     /**
      * @var array|string[]
@@ -420,7 +420,7 @@ class EntitiesSelector extends AbstractComponent
      * @return string
      * @throws LocalizedException
      */
-    private function getSelectionsProvider(): string
+    protected function getSelectionsProvider(): string
     {
         $namespace = $this->getRequiredConfigValueByPath('namespace');
 
@@ -437,7 +437,7 @@ class EntitiesSelector extends AbstractComponent
      * @return string
      * @throws LocalizedException
      */
-    private function getColumnsProvider(): string
+    protected function getColumnsProvider(): string
     {
         $namespace = $this->getRequiredConfigValueByPath('namespace');
 
@@ -453,7 +453,7 @@ class EntitiesSelector extends AbstractComponent
      * @return string
      * @throws LocalizedException
      */
-    private function getExternalProvider(): string
+    protected function getExternalProvider(): string
     {
         $namespace = $this->getRequiredConfigValueByPath('namespace');
 
@@ -635,7 +635,7 @@ class EntitiesSelector extends AbstractComponent
      * @return string
      * @throws LocalizedException
      */
-    private function generateUniqNamespace(): string
+    protected function generateUniqNamespace(): string
     {
         return sprintf(
             '%s_%s',

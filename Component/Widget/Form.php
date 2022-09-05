@@ -60,7 +60,7 @@ class Form extends BaseForm
             'context' => $this->getContext(),
             'data' => [
                 'config' => [
-                    'component' => 'Grasch_AdminUi/js/widget/form/element/abstract',
+                    'component' => 'Grasch_AdminUi/js/widget/form/element/sync-field',
                     'template' => 'Grasch_AdminUi/widget/form/element/hidden',
                     'customInputName' => $this->metadata->getSyncFieldName()
                 ],
