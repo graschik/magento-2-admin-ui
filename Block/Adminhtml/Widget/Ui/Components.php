@@ -5,7 +5,9 @@ namespace Grasch\AdminUi\Block\Adminhtml\Widget\Ui;
 
 use Grasch\AdminUi\Model\Widget\MetadataInterface;
 use Grasch\AdminUi\Model\Widget\MetadataInterfaceFactory;
+use Grasch\AdminUi\Model\Widget\PrepareUiComponent;
 use Grasch\AdminUi\Model\Widget\UiComponentFactory;
+use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Backend\Block\Template;
@@ -13,7 +15,6 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\UiComponent\ContextFactory;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\Framework\View\Element\UiComponentInterface;
 use Magento\Framework\View\Layout\Data\Structure;
 use Magento\Framework\View\Layout\Generator\Structure as StructureGenerator;
 
@@ -55,9 +56,19 @@ class Components extends Widget
     protected MetadataInterfaceFactory $metadataFactory;
 
     /**
-     * @param Template\Context $context
+     * @var PrepareUiComponent
+     */
+    protected PrepareUiComponent $prepareUiComponent;
+
+    /**
+     * @param Context $context
      * @param SerializerInterface $serializer
      * @param ContextFactory $contextFactory
+     * @param UiComponentFactory $uiComponentFactory
+     * @param StructureGenerator $structureGenerator
+     * @param Structure $structure
+     * @param MetadataInterfaceFactory $metadataFactory
+     * @param PrepareUiComponent $prepareUiComponent
      * @param array $data
      * @throws LocalizedException
      */
@@ -69,6 +80,7 @@ class Components extends Widget
         StructureGenerator $structureGenerator,
         Structure $structure,
         MetadataInterfaceFactory $metadataFactory,
+        PrepareUiComponent $prepareUiComponent,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -79,6 +91,7 @@ class Components extends Widget
         $this->structure = $structure;
         $this->structureGenerator = $structureGenerator;
         $this->metadataFactory = $metadataFactory;
+        $this->prepareUiComponent = $prepareUiComponent;
 
         if (empty($this->getNamespace())) {
             throw new LocalizedException(__('`namespace` is required.'));
@@ -99,7 +112,7 @@ class Components extends Widget
                 'structure' => $this->structure
             ]
         );
-        $this->prepareComponent($component);
+        $this->prepareUiComponent->execute($component);
         $configuration = $this->structureGenerator->generate($component);
 
         $element->setData('after_element_html', $this->render($configuration));
@@ -142,23 +155,6 @@ class Components extends Widget
         }
 
         return $this->context;
-    }
-
-    /**
-     * Call prepare method in the component UI
-     *
-     * @param UiComponentInterface $component
-     * @return void
-     */
-    protected function prepareComponent(UiComponentInterface $component)
-    {
-        $childComponents = $component->getChildComponents();
-        if (!empty($childComponents)) {
-            foreach ($childComponents as $child) {
-                $this->prepareComponent($child);
-            }
-        }
-        $component->prepare();
     }
 
     /**
