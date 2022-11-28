@@ -3,42 +3,23 @@ declare(strict_types=1);
 
 namespace Grasch\AdminUi\Plugin\Magento\Widget\Block\Adminhtml\Widget\Options;
 
-use Grasch\AdminUi\Model\Base64;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Serialize\SerializerInterface;
+use Grasch\AdminUi\Model\DecodeComponentValue;
 use Magento\Widget\Block\Adminhtml\Widget\Options;
-use Psr\Log\LoggerInterface;
 
 class DecodeComponentValues
 {
     /**
-     * @var Base64
+     * @var DecodeComponentValue
      */
-    private Base64 $base64;
+    private DecodeComponentValue $decodeComponentValue;
 
     /**
-     * @var LoggerInterface
-     */
-    private LoggerInterface $logger;
-
-    /**
-     * @var SerializerInterface
-     */
-    private SerializerInterface $serializer;
-
-    /**
-     * @param Base64 $base64
-     * @param LoggerInterface $logger
-     * @param SerializerInterface $serializer
+     * @param DecodeComponentValue $decodeComponentValue
      */
     public function __construct(
-        Base64 $base64,
-        LoggerInterface $logger,
-        SerializerInterface $serializer
+        DecodeComponentValue $decodeComponentValue
     ) {
-        $this->base64 = $base64;
-        $this->logger = $logger;
-        $this->serializer = $serializer;
+        $this->decodeComponentValue = $decodeComponentValue;
     }
 
     /**
@@ -61,15 +42,7 @@ class DecodeComponentValues
         }
 
         foreach ($result as &$value) {
-            if (preg_match('/encodedComponentsData\|.*/', $value)) {
-                $value = preg_replace('/encodedComponentsData\|/', '', $value);
-                try {
-                    $value = $this->base64->decode($value);
-                    $value = $this->serializer->unserialize($value);
-                } catch (LocalizedException $e) {
-                    $this->logger->error($e->getMessage());
-                };
-            }
+            $value = $this->decodeComponentValue->execute($value);
         }
 
         return $result;
