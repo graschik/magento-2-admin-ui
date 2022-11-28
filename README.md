@@ -32,7 +32,7 @@ php bin/magento setup:static-content:deploy
 - UI Components
   - [Entities Selector](docs/ui-components/entities-selector/README.md)
 - Widgets
-  - `[Using UI Components Inside Widgets](docs/widgets/using-ui-components/README.md)`
+  - [Using UI Components Inside Widgets](docs/widgets/using-ui-components/README.md)
 
 ## The MIT License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
