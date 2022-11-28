@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">widget_example_form.widget_example_form_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <namespace>widget_example_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>widget_example_form.widget_example_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="widget_example_form_data_source" component="Magento_Ui/js/form/provider">
+        <dataProvider class="Grasch\AdminUi\DataProvider\Widget\DataProvider" name="widget_example_form_data_source" />
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label>General Fieldset</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+        <component name="entities-selector" class="Grasch\AdminUi\Component\EntitiesSelector" component="Grasch_AdminUi/js/view/components/entities-selector">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="limit" xsi:type="array">
+                        <item name="min" xsi:type="number">2</item>
+                        <item name="max" xsi:type="number">4</item>
+                    </item>
+                    <item name="label" xsi:type="string">Products</item>
+                    <item name="namespace" xsi:type="string">product_listing</item>
+                    <item name="columnsName" xsi:type="string">product_columns</item>
+                    <item name="selectionsColumnName" xsi:type="string">ids</item>
+                    <item name="grid" xsi:type="array">
+                        <item name="columns" xsi:type="array">
+                            <item name="id" xsi:type="array">
+                                <item name="original_name" xsi:type="string">entity_id</item>
+                                <item name="type" xsi:type="string">text</item>
+                                <item name="label" xsi:type="string">ID</item>
+                                <item name="sortOrder" xsi:type="number">10</item>
+                                <item name="fit" xsi:type="boolean">true</item>
+                            </item>
+                            <item name="sku" xsi:type="array">
+                                <item name="original_name" xsi:type="string">sku</item>
+                                <item name="type" xsi:type="string">text</item>
+                                <item name="label" xsi:type="string">SKU</item>
+                                <item name="sortOrder" xsi:type="number">15</item>
+                                <item name="fit" xsi:type="boolean">false</item>
+                            </item>
+                            <item name="name" xsi:type="array">
+                                <item name="original_name" xsi:type="string">name</item>
+                                <item name="type" xsi:type="string">text</item>
+                                <item name="label" xsi:type="string">Name</item>
+                                <item name="sortOrder" xsi:type="number">20</item>
+                                <item name="fit" xsi:type="boolean">false</item>
+                            </item>
+                            <item name="thumbnail" xsi:type="array">
+                                <item name="original_name" xsi:type="string">thumbnail_src</item>
+                                <item name="type" xsi:type="string">thumbnail</item>
+                                <item name="label" xsi:type="string">Thumbnail</item>
+                                <item name="sortOrder" xsi:type="number">16</item>
+                                <item name="fit" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </component>
+        <field name="toggle" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="checkbox" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>checkbox</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="radio" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>radio</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <checkboxset name="checkboxset_example" sortOrder="13">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="additionalInfo" xsi:type="string">Additional information</item>
+                </item>
+            </argument>
+            <settings>
+                <dataScope>checkboxset</dataScope>
+                <label translate="true">Checkboxset</label>
+                <options>
+                    <option name="0" xsi:type="array">
+                        <item name="value" xsi:type="number">1</item>
+                        <item name="label" xsi:type="string" translate="true">Option #1</item>
+                    </option>
+                    <option name="1" xsi:type="array">
+                        <item name="value" xsi:type="number">2</item>
+                        <item name="label" xsi:type="string" translate="true">Option #2</item>
+                    </option>
+                    <option name="2" xsi:type="array">
+                        <item name="value" xsi:type="number">3</item>
+                        <item name="label" xsi:type="string" translate="true">Option #3</item>
+                    </option>
+                </options>
+            </settings>
+        </checkboxset>
+        <field name="title" sortOrder="20" formElement="input">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Text Field</label>
+                <dataScope>title</dataScope>
+            </settings>
+        </field>
+        <field name="storeviews" formElement="multiselect" class="Magento\Store\Ui\Component\Form\Field\StoreView">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <tooltip>
+                    <link>https://docs.magento.com/user-guide/configuration/scope.html</link>
+                    <description>What is this?</description>
+                </tooltip>
+                <label translate="true">Store View</label>
+                <dataScope>store_id</dataScope>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options class="Magento\Cms\Ui\Component\Listing\Column\Cms\Options"/>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+        <field name="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="cols" xsi:type="number">15</item>
+                    <item name="rows" xsi:type="number">5</item>
+                    <item name="label" translate="true" xsi:type="string">Textarea</item>
+                    <item name="dataType" translate="true" xsi:type="string">text</item>
+                </item>
+            </argument>
+        </field>
+        <button name="button">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="actions" xsi:type="array">
+                        <!-- Add your button's actions here -->
+                        <item name="0" xsi:type="array">
+                            <item name="targetName" xsi:type="string">TARGET_NAME</item>
+                            <item name="actionName" xsi:type="string">ACTION_NAME</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <displayAsLink>false</displayAsLink>
+                <title><![CDATA[Test Button]]></title>
+            </settings>
+        </button>
+        <colorPicker name="colors_filter">
+            <settings>
+                <label translate="true">Color</label>
+                <elementTmpl>ui/form/element/color-picker</elementTmpl>
+                <colorFormat>rgb</colorFormat>
+                <colorPickerMode>full</colorPickerMode>
+                <dataScope>colors_filter</dataScope>
+            </settings>
+        </colorPicker>
+        <date name="date_example">
+            <settings>
+                <validation>
+                    <rule name="validate-date" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <dataScope>date</dataScope>
+                <label translate="true">Date</label>
+                <visible>true</visible>
+            </settings>
+        </date>
+        <field name="imageUploader" formElement="imageUploader">
+            <settings>
+                <notice translate="true">Some notice.</notice>
+                <label translate="true">Image Uploader</label>
+                <componentType>imageUploader</componentType>
+                <dataScope>image_uploader</dataScope>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="string" name="url">path/to/save</param>
+                        </uploaderConfig>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <modal name="test_modal">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="onCancel" xsi:type="string">actionCancel</item>
+                    <item name="options" xsi:type="array">
+                        <item name="buttons" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="text" xsi:type="string">Cancel</item>
+                                <item name="class" xsi:type="string">action-secondary</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="string">actionCancel</item>
+                                </item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="text" xsi:type="string">Clear</item>
+                                <item name="class" xsi:type="string">action-secondary</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="targetName" xsi:type="string">${ $.name }.testField</item>
+                                        <item name="actionName" xsi:type="string">clear</item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="2" xsi:type="array">
+                                <item name="text" xsi:type="string">Done</item>
+                                <item name="class" xsi:type="string">action-primary</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="string">actionDone</item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <fieldset name="general">
+                <settings>
+                    <label/>
+                </settings>
+                <field name="testField" formElement="input">
+                    <settings>
+                        <dataType>text</dataType>
+                        <label translate="true">Test Field</label>
+                    </settings>
+                </field>
+            </fieldset>
+        </modal>
+        <button name="modal_button">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="title" xsi:type="string">Open modal</item>
+                    <item name="actions" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.parentName}.test_modal</item>
+                            <item name="actionName" xsi:type="string">openModal</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </button>
+        <urlInput name="url_input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="urlTypes" xsi:type="object">Magento\Ui\Model\UrlInput\LinksConfigProvider</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Url Input</label>
+                <dataScope>url_input</dataScope>
+            </settings>
+        </urlInput>
+        <field name="wysiwyg" sortOrder="50" template="ui/form/field" formElement="wysiwyg">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="height" xsi:type="string">100px</item>
+                        <item name="add_variables" xsi:type="boolean">true</item>
+                        <item name="add_widgets" xsi:type="boolean">true</item>
+                        <item name="add_images" xsi:type="boolean">true</item>
+                        <item name="add_directives" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <label>Content 1</label>
+                <dataScope>wysiwyg</dataScope>
+            </settings>
+            <formElements>
+                <wysiwyg>
+                    <settings>
+                        <rows>8</rows>
+                        <wysiwyg>true</wysiwyg>
+                    </settings>
+                </wysiwyg>
+            </formElements>
+        </field>
+        <wysiwyg name="wysiwyg_2" template="ui/form/field" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="height" xsi:type="string">100px</item>
+                        <item name="add_variables" xsi:type="boolean">true</item>
+                        <item name="add_widgets" xsi:type="boolean">true</item>
+                        <item name="add_images" xsi:type="boolean">true</item>
+                        <item name="add_directives" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <label>Content 2</label>
+                <dataScope>wysiwyg_2</dataScope>
+            </settings>
+        </wysiwyg>
+        <dynamicRows name="dynamic_rows">
+            <settings>
+                <label translate="true">Dynamic Rows</label>
+                <dataScope>dynamic_rows</dataScope>
+                <addButtonLabel translate="true">Add Record</addButtonLabel>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                </additionalClasses>
+                <componentType>dynamicRows</componentType>
+            </settings>
+            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
+                <field name="field_1" formElement="input">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <dataType>text</dataType>
+                        <label>Field #1</label>
+                    </settings>
+                </field>
+                <field name="field_2" formElement="input">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <dataType>text</dataType>
+                        <label>Field #2</label>
+                    </settings>
+                </field>
+            </container>
+        </dynamicRows>
+    </fieldset>
+</form>

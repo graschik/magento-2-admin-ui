@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="example_widget_with_ui_components"
+            class="Grasch\AdminUi\Block\Widget\ExampleOfUIComponents">
+        <label translate="true">Example Of Widget With Ui Components</label>
+        <description translate="true">Example Of Widget With Ui Components</description>
+        <parameters>
+            <parameter name="component_data" xsi:type="block">
+                <block class="Grasch\AdminUi\Block\Adminhtml\Widget\Ui\Components">
+                    <data>
+                        <item name="namespace" xsi:type="string">widget_example_form</item>
+                    </data>
+                </block>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
