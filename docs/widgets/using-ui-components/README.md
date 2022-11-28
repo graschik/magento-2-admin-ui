@@ -12,6 +12,7 @@ You can see an example of a widget with most of the available UI components. The
 
 ## How to use it?
 - Create [app/code/Vendor/Module/etc/widget.xml](../../../etc/widget.xml) file inside your module.
+    - Create a widget class that will extend from ```Grasch\AdminUi\Block\Widget\AbstractWidget```. 
     - You have to add only one parameter ```block``` with class ```Grasch\AdminUi\Block\Adminhtml\Widget\Ui\Components```.
     - ```namespace``` is the name of your form.xml file.
   ```xml
@@ -27,3 +28,17 @@ You can see an example of a widget with most of the available UI components. The
   ```
 - Create [app/code/Vendor/Module/view/adminhtml/ui_component/form.xml](../../../view/adminhtml/ui_component/widget_example_form.xml) file inside your module. Add the UI Components that you need here.
     - Use this class ```Grasch\AdminUi\DataProvider\Widget\DataProvider``` as ```dataProvider``` for your form.
+- Get data from a widget.
+    ```php
+  /**
+     * @return string
+     */
+    protected function _toHtml(): string
+    {
+        $data = $this->getData('component_data');
+        print_r($data);
+
+        return '';
+    }
+  ```
+  ![](result.png)
