@@ -9,6 +9,8 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 class ListingComponentModifier extends AbstractModifier implements ModifierInterface
 {
     /**
+     * Modify listing component
+     *
      * @param array $configuration
      * @param ContextInterface $context
      * @param array $params
@@ -37,6 +39,8 @@ class ListingComponentModifier extends AbstractModifier implements ModifierInter
     }
 
     /**
+     * Get config
+     *
      * @return \false[][]
      */
     private function getConfig(): array

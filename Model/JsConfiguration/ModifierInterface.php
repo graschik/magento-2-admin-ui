@@ -8,6 +8,8 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 interface ModifierInterface
 {
     /**
+     * Run modifiers
+     *
      * @param array $configuration
      * @param ContextInterface $context
      * @param array $params

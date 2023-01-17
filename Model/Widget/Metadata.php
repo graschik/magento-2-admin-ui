@@ -8,7 +8,7 @@ use Magento\Framework\DataObject;
 class Metadata extends DataObject implements MetadataInterface
 {
     /**
-     * @return array
+     * @inheritDoc
      */
     public function getFormData(): array
     {
@@ -16,8 +16,7 @@ class Metadata extends DataObject implements MetadataInterface
     }
 
     /**
-     * @param array $data
-     * @return void
+     * @inheritDoc
      */
     public function setFormData(array $data): void
     {
@@ -25,7 +24,7 @@ class Metadata extends DataObject implements MetadataInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getSyncFieldName(): string
     {
@@ -33,8 +32,7 @@ class Metadata extends DataObject implements MetadataInterface
     }
 
     /**
-     * @param string $name
-     * @return void
+     * @inheritDoc
      */
     public function setSyncFieldName(string $name): void
     {

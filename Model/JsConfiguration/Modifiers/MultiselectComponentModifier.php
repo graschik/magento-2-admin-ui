@@ -9,6 +9,8 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 class MultiselectComponentModifier extends AbstractModifier implements ModifierInterface
 {
     /**
+     * Modify multiselect component
+     *
      * @param array $configuration
      * @param ContextInterface $context
      * @param array $params

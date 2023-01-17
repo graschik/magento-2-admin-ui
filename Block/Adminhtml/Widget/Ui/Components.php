@@ -99,6 +99,10 @@ class Components extends Widget
     }
 
     /**
+     * Prepare element HTML
+     *
+     * @param AbstractElement $element
+     * @return AbstractElement
      * @throws LocalizedException
      */
     public function prepareElementHtml(AbstractElement $element): AbstractElement
@@ -123,6 +127,8 @@ class Components extends Widget
     }
 
     /**
+     * Generate metadata
+     *
      * @param AbstractElement $element
      * @return MetadataInterface
      */
@@ -142,6 +148,8 @@ class Components extends Widget
     }
 
     /**
+     * Get context
+     *
      * @return ContextInterface
      * @throws LocalizedException
      */
@@ -158,6 +166,8 @@ class Components extends Widget
     }
 
     /**
+     * Render ui components
+     *
      * @param array $configuration
      * @return string
      */
@@ -180,6 +190,8 @@ EOT;
     }
 
     /**
+     * Get scope
+     *
      * @return string
      */
     public function getScope(): string
@@ -188,6 +200,8 @@ EOT;
     }
 
     /**
+     * Wrap content
+     *
      * @param string $content
      * @return string
      */

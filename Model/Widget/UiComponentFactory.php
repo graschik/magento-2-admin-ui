@@ -12,8 +12,10 @@ use Magento\Ui\Component\Form;
 class UiComponentFactory extends BaseUiComponentFactory
 {
     /**
-     * @param $identifier
-     * @param $name
+     * Create ui component
+     *
+     * @param string $identifier
+     * @param string $name
      * @param array $arguments
      * @return UiComponentInterface
      * @throws LocalizedException

@@ -23,10 +23,13 @@ class DecodeComponentValues
     }
 
     /**
+     * Decode component value
+     *
      * @param Options $subject
-     * @param $result
+     * @param mixed $result
      * @param string $key
      * @return array|mixed
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterGetData(
         Options $subject,

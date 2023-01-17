@@ -15,7 +15,7 @@ class DataProvider extends ModifierPoolDataProvider implements DataProviderInter
     protected MetadataInterface $metadata;
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $meta
      * @param array $data
      * @param PoolInterface|null $pool
@@ -37,6 +37,8 @@ class DataProvider extends ModifierPoolDataProvider implements DataProviderInter
     }
 
     /**
+     * Get data
+     *
      * @return array
      */
     public function getData(): array
@@ -45,8 +47,7 @@ class DataProvider extends ModifierPoolDataProvider implements DataProviderInter
     }
 
     /**
-     * @param MetadataInterface $metadata
-     * @return void
+     * @inheritDoc
      */
     public function setMetadata(MetadataInterface $metadata): void
     {
@@ -54,7 +55,7 @@ class DataProvider extends ModifierPoolDataProvider implements DataProviderInter
     }
 
     /**
-     * @return MetadataInterface
+     * @inheritDoc
      */
     public function getMetadata(): MetadataInterface
     {

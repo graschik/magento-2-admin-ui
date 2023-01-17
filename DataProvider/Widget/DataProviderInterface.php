@@ -9,12 +9,16 @@ use Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterfac
 interface DataProviderInterface extends BaseDataProviderInterface
 {
     /**
+     * Set metadata
+     *
      * @param MetadataInterface $metadata
      * @return mixed
      */
     public function setMetadata(MetadataInterface $metadata): void;
 
     /**
+     * Get metadata
+     *
      * @return MetadataInterface
      */
     public function getMetadata(): MetadataInterface;

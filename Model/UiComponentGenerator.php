@@ -50,6 +50,8 @@ class UiComponentGenerator
     }
 
     /**
+     * Generate child components from array
+     *
      * @param UiComponentInterface $parent
      * @param array $children
      * @return UiComponentInterface
@@ -77,6 +79,8 @@ class UiComponentGenerator
     }
 
     /**
+     * Create ui component
+     *
      * @param string $name
      * @param array $data
      * @param ContextInterface $context

@@ -8,6 +8,8 @@ use Magento\Framework\View\Element\UiComponentInterface;
 interface PreparerInterface
 {
     /**
+     * Prepare ui component
+     *
      * @param UiComponentInterface $component
      * @return mixed
      */

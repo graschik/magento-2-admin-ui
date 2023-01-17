@@ -33,6 +33,8 @@ class ModifyJsConfiguration
     }
 
     /**
+     * Modify ui components
+     *
      * @param Generic $subject
      * @param array $result
      * @param UiComponentInterface $component

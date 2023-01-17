@@ -30,8 +30,10 @@ abstract class AbstractWidget extends Template
     }
 
     /**
-     * @param $key
-     * @param $index
+     * Get data
+     *
+     * @param string $key
+     * @param string|int $index
      * @return array|mixed|string|null
      */
     public function getData($key = '', $index = null)

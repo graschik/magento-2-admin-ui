@@ -43,6 +43,8 @@ class DecodeComponentValue
     }
 
     /**
+     * Decode component value
+     *
      * @param string $value
      * @return array
      */

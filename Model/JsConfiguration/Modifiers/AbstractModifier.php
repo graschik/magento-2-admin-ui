@@ -23,6 +23,8 @@ abstract class AbstractModifier
     }
 
     /**
+     * Get path to main component
+     *
      * @param ContextInterface $context
      * @return string
      */

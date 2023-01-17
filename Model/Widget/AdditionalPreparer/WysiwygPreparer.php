@@ -23,6 +23,8 @@ class WysiwygPreparer implements PreparerInterface
     }
 
     /**
+     * Prepare wysiwyg
+     *
      * @param UiComponentInterface $component
      * @return mixed|void
      */

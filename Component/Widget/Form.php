@@ -27,6 +27,7 @@ class Form extends BaseForm
      * @param ContextInterface $context
      * @param FilterBuilder $filterBuilder
      * @param MetadataInterface $metadata
+     * @param UiComponentFactory $uiComponentFactory
      * @param array $components
      * @param array $data
      */
@@ -52,7 +53,7 @@ class Form extends BaseForm
     }
 
     /**
-     * @inheridoc
+     * @inheritDoc
      */
     public function prepare(): void
     {
@@ -80,6 +81,8 @@ class Form extends BaseForm
     }
 
     /**
+     * Get dataSource data
+     *
      * @return array
      */
     public function getDataSourceData(): array
@@ -88,6 +91,8 @@ class Form extends BaseForm
     }
 
     /**
+     * Get data provider
+     *
      * @return DataProviderInterface
      */
     public function getDataProvider(): DataProviderInterface

@@ -116,6 +116,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Init columns config
+     *
      * @throws LocalizedException
      */
     protected function _initColumnsConfig()
@@ -141,7 +143,7 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getComponentName(): string
     {
@@ -149,8 +151,7 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
-     * @inheritdoc
-     * @throws LocalizedException
+     * @inheritDoc
      */
     public function prepare()
     {
@@ -163,6 +164,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get child components as array
+     *
      * @return array
      * @throws LocalizedException
      */
@@ -177,6 +180,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get grid component
+     *
      * @return array
      * @throws LocalizedException
      */
@@ -234,6 +239,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Fill meta
+     *
      * @return array[]
      */
     public function fillMeta(): array
@@ -252,6 +259,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get text column component
+     *
      * @param string $columnName
      * @param array $columnConfig
      * @return array
@@ -282,6 +291,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get thumbnail column component
+     *
      * @param string $columnName
      * @param array $columnConfig
      * @return array
@@ -312,6 +323,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get action delete column component
+     *
      * @return array
      */
     public function getActionDeleteColumn(): array
@@ -337,6 +350,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get position column component
+     *
      * @return array
      */
     public function getPositionColumn(): array
@@ -361,6 +376,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get button set component
+     *
      * @return array
      * @throws LocalizedException
      */
@@ -417,6 +434,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get selections provider
+     *
      * @return string
      * @throws LocalizedException
      */
@@ -434,6 +453,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get columns provider
+     *
      * @return string
      * @throws LocalizedException
      */
@@ -450,6 +471,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get external provider
+     *
      * @return string
      * @throws LocalizedException
      */
@@ -461,6 +484,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get listing renderer component
+     *
      * @return array
      * @throws LocalizedException
      */
@@ -481,6 +506,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get generic modal component
+     *
      * @return array
      * @throws LocalizedException
      */
@@ -542,6 +569,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get js modifier params
+     *
      * @return array
      * @throws LocalizedException
      */
@@ -561,6 +590,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get generic modal buttons component
+     *
      * @return array
      * @throws LocalizedException
      */
@@ -604,6 +635,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get require config value by path
+     *
      * @param string $path
      * @return array|mixed
      * @throws LocalizedException
@@ -623,6 +656,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Get config by path
+     *
      * @param string $path
      * @return array|mixed|null
      */
@@ -632,6 +667,8 @@ class EntitiesSelector extends AbstractComponent
     }
 
     /**
+     * Generate uniq namespace
+     *
      * @return string
      * @throws LocalizedException
      */

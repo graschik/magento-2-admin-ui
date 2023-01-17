@@ -15,7 +15,7 @@ class PrepareUiComponent
     private array $additionalPreparers;
 
     /**
-     * @param array $afterPrepare
+     * @param array $additionalPreparers
      */
     public function __construct(
         array $additionalPreparers = []
@@ -24,6 +24,8 @@ class PrepareUiComponent
     }
 
     /**
+     * Prepare ui component
+     *
      * @param UiComponentInterface $component
      * @return void
      */

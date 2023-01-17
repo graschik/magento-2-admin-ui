@@ -22,6 +22,8 @@ class ModifierComposite implements ModifierInterface
     }
 
     /**
+     * Run modifiers
+     *
      * @param array $configuration
      * @param ContextInterface $context
      * @param array $params
