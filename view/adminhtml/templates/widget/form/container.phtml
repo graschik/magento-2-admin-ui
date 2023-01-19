@@ -1,0 +1,78 @@
+<?php
+/** @var $block \Magento\Backend\Block\Widget\Form\Container */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+<?= /* @noEscape */ $block->getFormInitScripts() ?>
+<?php if ($block->getButtonsHtml('header')): ?>
+    <div class="page-form-actions" <?= /* @noEscape */ $block->getUiId('content-header') ?>>
+        <?= $block->getButtonsHtml('header') ?>
+    </div>
+<?php endif; ?>
+<?php if ($block->getButtonsHtml('toolbar')): ?>
+    <div class="page-main-actions">
+        <div class="page-actions">
+            <div class="page-actions-buttons">
+                <?= $block->getButtonsHtml('toolbar') ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<?= $block->getFormHtml() ?>
+<?php if ($block->hasFooterButtons()): ?>
+    <div class="content-footer">
+        <p class="form-buttons"><?= $block->getButtonsHtml('footer') ?></p>
+    </div>
+<?php endif; ?>
+<?php $scriptString = <<<script
+
+require([
+    'jquery',
+    'uiRegistry',
+    'mage/backend/form',
+    'mage/backend/validation',
+], function($, registry){
+
+    $('#edit_form').form()
+        .validation({
+            validationUrl: '{$escaper->escapeUrl($block->getValidationUrl())}',
+            highlight: function(element) {
+                var detailsElement = $(element).closest('details');
+                if (detailsElement.length && detailsElement.is('.details')) {
+                    var summaryElement = detailsElement.find('summary');
+                    if (summaryElement.length && summaryElement.attr('aria-expanded') === "false") {
+                        summaryElement.trigger('click');
+                    }
+                }
+                $(element).trigger('highlight.validate');
+            },
+            submitHandler: function(form) {
+                var isValid = this.valid();
+
+                if (isValid) {
+                    $('.widget-ui-components').each(function (index, item) {
+                        var path = jQuery(item).data('scope');
+                        if (registry.get(path)) {
+                            registry.get(path).source.set('params.invalid', false);
+                            registry.get(path).source.trigger('data.validate');
+                            if (registry.get(path).source.get('params.invalid')) {
+                                $('#widget_instace_tabs_properties_section_content').trigger('highlight.validate');
+                                isValid = false;
+                                return false;
+                            }
+                        }
+                    });
+                }
+
+                if (isValid) {
+                    form.submit();
+                }
+            }
+        });
+
+});
+
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+<?= /* @noEscape */ $block->getFormScripts() ?>
