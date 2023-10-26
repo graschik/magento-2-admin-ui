@@ -29,7 +29,9 @@ declare(strict_types=1);
 namespace Grasch\AdminUi\Component;
 
 use Grasch\AdminUi\Model\UiComponentGenerator;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Stdlib\ArrayManager;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Ui\Component\AbstractComponent;
@@ -82,6 +84,11 @@ class EntitiesSelector extends AbstractComponent
     protected array $_columnsConfig = [];
 
     /**
+     * @var ArrayManager|mixed
+     */
+    private ArrayManager $arrayManager;
+
+    /**
      * @param ContextInterface $context
      * @param UrlInterface $urlBuilder
      * @param UiComponentGenerator $uiComponentGenerator
@@ -94,6 +101,7 @@ class EntitiesSelector extends AbstractComponent
         ContextInterface $context,
         UrlInterface $urlBuilder,
         UiComponentGenerator $uiComponentGenerator,
+        ArrayManager $arrayManager = null,
         array $components = [],
         array $data = [],
         array $requiredColumnFields = []
@@ -106,6 +114,7 @@ class EntitiesSelector extends AbstractComponent
 
         $this->urlBuilder = $urlBuilder;
         $this->uiComponentGenerator = $uiComponentGenerator;
+        $this->arrayManager = $arrayManager ?? ObjectManager::getInstance()->create(ArrayManager::class);
 
         $this->_requiredColumnFields = array_merge(
             $this->_requiredColumnFields,
@@ -161,6 +170,25 @@ class EntitiesSelector extends AbstractComponent
         );
 
         parent::prepare();
+    }
+
+    /**
+     * @return array
+     * @throws LocalizedException
+     */
+    public function getChildComponentsAsArrayForMeta(): array
+    {
+        $data = $this->getChildComponentsAsArray();
+
+        $paths = $this->arrayManager->findPaths('data', $data);
+        foreach ($paths as $path) {
+            $value = ['data' => $this->arrayManager->get($path, $data)];
+            $newPath = str_replace('/data', '/arguments', $path);
+            $data = $this->arrayManager->remove($path, $data);
+            $data = $this->arrayManager->set($newPath, $data, $value);
+        }
+
+        return $data;
     }
 
     /**
@@ -415,11 +443,13 @@ class EntitiesSelector extends AbstractComponent
                                 [
                                     [
                                         'targetName' => '${ $.parentName.replace(".button_set", "") }.modal',
+                                        '__disableTmpl' => ['targetName' => false],
                                         'actionName' => 'toggleModal',
                                     ],
                                     [
                                         'targetName' =>
                                             '${ $.parentName.replace(".button_set", "") }.listing-renderer',
+                                        '__disableTmpl' => ['targetName' => false],
                                         'actionName' => 'render',
                                     ],
                                 ],
@@ -494,11 +524,13 @@ class EntitiesSelector extends AbstractComponent
         return [
             'data' => [
                 'config' => [
+                    'componentType' => 'container',
                     'component' => 'Grasch_AdminUi/js/view/components/entities-selector/insert-listing/renderer',
                     'selectionsProvider' => $this->getSelectionsProvider(),
                     'columnsProvider' => $this->getColumnsProvider(),
                     'insertListing' => 'uniq_ns = ' . $this->generateUniqNamespace(),
-                    'grid' => '${ $.parentName }.' . $this->getName()
+                    'grid' => '${ $.parentName }.' . $this->getName(),
+                    '__disableTmpl' => ['grid' => false],
                 ]
             ],
             'context' => $this->context
@@ -521,6 +553,7 @@ class EntitiesSelector extends AbstractComponent
             'data' => [
                 'componentClassName' => Modal::class,
                 'config' => [
+                    'componentType' => Modal::NAME,
                     'component' => 'Magento_Ui/js/modal/modal-component',
                     'provider' => null,
                     'options' => [
@@ -553,10 +586,12 @@ class EntitiesSelector extends AbstractComponent
                                 'namespace' => '${ $.ns }',
                                 'js_modifier' => [
                                     'params' => $this->getJsModifierParams()
-                                ]
+                                ],
+                                '__disableTmpl' => ['namespace' => false],
                             ],
                             'links' => [
-                                'value' => '${ $.provider }:${ $.uniq_ns }'
+                                'value' => '${ $.provider }:${ $.uniq_ns }',
+                                '__disableTmpl' => ['value' => false]
                             ],
                             'behaviourType' => 'simple',
                             'externalFilterMode' => true,
