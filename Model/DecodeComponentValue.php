@@ -1,7 +1,4 @@
 <?php
-/**
- * Copyright © InComm, Inc. All rights reserved.
- */
 declare(strict_types=1);
 
 namespace Grasch\AdminUi\Model;
