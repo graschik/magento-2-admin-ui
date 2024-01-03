@@ -388,7 +388,7 @@ class EntitiesSelector extends AbstractComponent
             'position' => [
                 'data' => [
                     'config' => [
-                        'component' => 'Magento_Ui/js/form/element/abstract',
+                        'component' => 'Magento_Catalog/js/form/element/input',
                         'template' => 'ui/form/field',
                         'elementTmpl' => 'ui/form/element/input',
                         'dataType' => Number::NAME,

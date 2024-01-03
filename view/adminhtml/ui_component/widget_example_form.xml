@@ -419,6 +419,11 @@
                         <label>Field #2</label>
                     </settings>
                 </field>
+                <field name="position" component="Magento_Catalog/js/form/element/input" formElement="input">
+                    <settings>
+                        <visible>false</visible>
+                    </settings>
+                </field>
             </container>
         </dynamicRows>
     </fieldset>
