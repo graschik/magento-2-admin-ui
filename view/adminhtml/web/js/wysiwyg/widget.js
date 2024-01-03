@@ -3,6 +3,8 @@ define([
     'wysiwygAdapter',
     'Magento_Ui/js/modal/alert',
     'uiRegistry',
+    'Grasch_AdminUi/js/widget/events',
+    'consoleLogger',
     'jquery/ui',
     'mage/translate',
     'mage/mage',
@@ -10,7 +12,7 @@ define([
     'mage/adminhtml/events',
     'prototype',
     'Magento_Ui/js/modal/modal'
-], function (jQuery, wysiwyg, alert, registry) {
+], function (jQuery, wysiwyg, alert, registry, events, consoleLogger) {
     var widgetTools = {
 
         /**
@@ -170,6 +172,24 @@ define([
          * @param {*} widgetTargetId
          */
         initialize: function (formEl, widgetEl, widgetOptionsEl, optionsSourceUrl, widgetTargetId) {
+            this.pageBuilderInstances = [];
+
+            events.on('pagebuilder:register', function (data) {
+                jQuery('.widget-ui-components').each(function (index, item) {
+                    var
+                        scope = jQuery(item).data('scope'),
+                        ns;
+
+                    if (scope) {
+                        var ns =  scope.split('.').first();
+                    }
+
+                    if (data.ns === ns) {
+                        this.pageBuilderInstances.push(data.instance);
+                    }
+                }.bind(this));
+            }.bind(this));
+
             $(formEl).insert({
                 bottom: widgetTools.getDivHtml(widgetOptionsEl)
             });
@@ -455,7 +475,7 @@ define([
                 });
             }
 
-            if (validationResult) {
+            var submit = function () {
                 formElements = [];
                 i = 0;
                 Form.getElements($(this.formEl)).each(function (e) {
@@ -505,6 +525,38 @@ define([
                         }
                     }.bind(this)
                 });
+            }.bind(this);
+
+            if (validationResult) {
+                if (window.isPageBuilderEnabled) {
+                    var timeout, locks;
+
+                    if (_.isEmpty(this.pageBuilderInstances)) {
+                        form.submit();
+                    } else {
+                        timeout = setTimeout(function () {
+                            consoleLogger.error('Page Builder was rendering for 5 seconds without releasing locks.');
+                        }, 5000);
+
+                        jQuery('body').trigger('processStart');
+
+                        // Wait for all rendering locks within Page Builder stages to resolve
+                        jQuery.when.apply(
+                            null,
+                            this.pageBuilderInstances.map(function (instance) {
+                                locks = instance.stage.renderingLocks;
+
+                                return locks[locks.length - 1];
+                            })
+                        ).then(function () {
+                            jQuery('body').trigger('processStop');
+                            clearTimeout(timeout);
+                            submit();
+                        });
+                    }
+                } else {
+                    submit();
+                }
             }
         },
 

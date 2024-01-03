@@ -1,9 +1,11 @@
 <?xml version="1.0"?><page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
     <body>
         <referenceContainer name="content">
             <referenceBlock name="widget_instance_edit">
                 <arguments>
                     <argument name="template" xsi:type="string">Grasch_AdminUi::widget/form/container.phtml</argument>
+                    <argument name="page_builder" xsi:type="object">\Grasch\AdminUi\ViewModel\PageBuilder</argument>
                 </arguments>
             </referenceBlock>
             <block name="wysiwyg_widget.initialize-ui-components" template="Grasch_AdminUi::widget/initialize-ui-components.phtml"/>

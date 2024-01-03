@@ -43,9 +43,9 @@ class DecodeComponentValue
      * Decode component value
      *
      * @param string $value
-     * @return array
+     * @return mixed
      */
-    public function execute(string $value): array
+    public function execute(string $value)
     {
         if (preg_match('/encodedComponentsData\|.*/', $value)) {
             $value = preg_replace('/encodedComponentsData\|/', '', $value);

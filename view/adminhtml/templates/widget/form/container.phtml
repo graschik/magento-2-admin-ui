@@ -24,55 +24,103 @@
         <p class="form-buttons"><?= $block->getButtonsHtml('footer') ?></p>
     </div>
 <?php endif; ?>
-<?php $scriptString = <<<script
 
-require([
-    'jquery',
-    'uiRegistry',
-    'mage/backend/form',
-    'mage/backend/validation',
-], function($, registry){
+<script>
+    window.isPageBuilderEnabled = <?= $block->getPageBuilder()->isPageBuilderEnabled() ? 'true' : 'false' ?>;
+</script>
+<script>
+    require([
+        'jquery',
+        'uiRegistry',
+        'Grasch_AdminUi/js/widget/events',
+        'consoleLogger',
+        'mage/backend/form',
+        'mage/backend/validation',
+    ], function($, registry, events, consoleLogger) {
+        var pageBuilderInstances = [];
 
-    $('#edit_form').form()
-        .validation({
-            validationUrl: '{$escaper->escapeUrl($block->getValidationUrl())}',
-            highlight: function(element) {
-                var detailsElement = $(element).closest('details');
-                if (detailsElement.length && detailsElement.is('.details')) {
-                    var summaryElement = detailsElement.find('summary');
-                    if (summaryElement.length && summaryElement.attr('aria-expanded') === "false") {
-                        summaryElement.trigger('click');
-                    }
-                }
-                $(element).trigger('highlight.validate');
-            },
-            submitHandler: function(form) {
-                var isValid = this.valid();
+        events.on('pagebuilder:register', function (data) {
+            $('.widget-ui-components').each(function (index, item) {
+                var
+                    scope = $(item).data('scope'),
+                    ns;
 
-                if (isValid) {
-                    $('.widget-ui-components').each(function (index, item) {
-                        var path = jQuery(item).data('scope');
-                        if (registry.get(path)) {
-                            registry.get(path).source.set('params.invalid', false);
-                            registry.get(path).source.trigger('data.validate');
-                            if (registry.get(path).source.get('params.invalid')) {
-                                $('#widget_instace_tabs_properties_section_content').trigger('highlight.validate');
-                                isValid = false;
-                                return false;
-                            }
-                        }
-                    });
+                if (scope) {
+                    ns =  scope.split('.').first();
                 }
 
-                if (isValid) {
-                    form.submit();
+                if (data.ns === ns) {
+                    pageBuilderInstances.push(data.instance);
                 }
-            }
+            });
         });
 
-});
+        $('#edit_form').form()
+            .validation({
+                validationUrl: '{$escaper->escapeUrl($block->getValidationUrl())}',
+                highlight: function(element) {
+                    var detailsElement = $(element).closest('details');
+                    if (detailsElement.length && detailsElement.is('.details')) {
+                        var summaryElement = detailsElement.find('summary');
+                        if (summaryElement.length && summaryElement.attr('aria-expanded') === "false") {
+                            summaryElement.trigger('click');
+                        }
+                    }
+                    $(element).trigger('highlight.validate');
+                },
+                submitHandler: function(form) {
+                    var isValid = this.valid();
 
-script;
-?>
-<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+                    if (isValid) {
+                        $('.widget-ui-components').each(function (index, item) {
+                            var path = jQuery(item).data('scope');
+                            if (registry.get(path)) {
+                                registry.get(path).source.set('params.invalid', false);
+                                registry.get(path).source.trigger('data.validate');
+                                if (registry.get(path).source.get('params.invalid')) {
+                                    $('#widget_instace_tabs_properties_section_content').trigger('highlight.validate');
+                                    isValid = false;
+                                    return false;
+                                }
+                            }
+                        });
+                    }
+
+                    if (isValid) {
+                        if (window.isPageBuilderEnabled) {
+                            var timeout, locks;
+
+                            if (_.isEmpty(pageBuilderInstances)) {
+                                form.submit();
+                            } else {
+                                timeout = setTimeout(function () {
+                                    consoleLogger.error('Page Builder was rendering for 5 seconds without releasing locks.');
+                                }, 5000);
+
+                                $('body').trigger('processStart');
+
+                                // Wait for all rendering locks within Page Builder stages to resolve
+                                $.when.apply(
+                                    null,
+                                    pageBuilderInstances.map(function (instance) {
+                                        locks = instance.stage.renderingLocks;
+
+                                        return locks[locks.length - 1];
+                                    })
+                                ).then(function () {
+                                    $('body').trigger('processStop');
+                                    clearTimeout(timeout);
+                                    form.submit();
+                                });
+                            }
+                        } else {
+                            form.submit();
+                        }
+                    }
+                }
+            });
+
+    });
+</script>
+
 <?= /* @noEscape */ $block->getFormScripts() ?>

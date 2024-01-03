@@ -2,7 +2,7 @@ define([
     'underscore',
     'mageUtils',
     'uiLayout',
-    'Magento_Ui/js/form/element/wysiwyg',
+    'Magento_PageBuilder/js/form/element/wysiwyg',
     'ko'
 ], function (_, utils, layout, Wysiwyg, ko) {
     'use strict';
@@ -32,6 +32,16 @@ define([
                 this.value(Base64.decode(this.customValue()));
             }
             this.componentInitialized = true;
+
+            return this;
+        },
+
+        setInitialValue: function () {
+            this._super();
+
+            if (this.customValue()) {
+                this.initialValue = Base64.decode(this.customValue());
+            }
 
             return this;
         },

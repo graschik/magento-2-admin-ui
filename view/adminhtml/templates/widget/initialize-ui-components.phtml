@@ -1,6 +1,13 @@
 <?php
 /** @var $block \Magento\Framework\View\Element\Template */
+
+$pageBuilder = $block->getPageBuilder();
 ?>
+<?php if ($pageBuilder): ?>
+    <script>
+        window.isPageBuilderEnabled = <?= $block->getPageBuilder()->isPageBuilderEnabled() ? 'true' : 'false' ?>;
+    </script>
+<?php endif; ?>
 
 <script>
     require([
