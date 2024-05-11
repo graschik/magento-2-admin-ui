@@ -532,7 +532,7 @@ define([
                     var timeout, locks;
 
                     if (_.isEmpty(this.pageBuilderInstances)) {
-                        form.submit();
+                        submit();
                     } else {
                         timeout = setTimeout(function () {
                             consoleLogger.error('Page Builder was rendering for 5 seconds without releasing locks.');
